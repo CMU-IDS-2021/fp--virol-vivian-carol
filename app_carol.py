@@ -10,18 +10,31 @@ def main():
   # use custom css
   #with open('./styles.css') as f:
     #st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-  #themoviedb API
+  #themoviedb API - search for keywords
   response = requests.get("https://api.themoviedb.org/3/search/person?api_key=8bab42520fb79424d47245ab1e5406cf&query=Ang+Lee")
+  r = response.json()
+  df=pd.DataFrame(r['results'])
   st.markdown(response.status_code)
-  st.markdown(response.content)
-#themoviedb API
+  st.dataframe(df)
+#themoviedb API - search for person bio by id
   response = requests.get("https://api.themoviedb.org/3/person/1614?api_key=8bab42520fb79424d47245ab1e5406cf&language=en-US")
+  r = response.json()
+  #df=pd.DataFrame(r['results'])
   st.markdown(response.status_code)
-  st.markdown(response.content)
-  #themoviedb API
+  st.markdown(r)
+
+  #themoviedb API - search for person's work by id
   response = requests.get("https://api.themoviedb.org/3/person/1614/movie_credits?api_key=8bab42520fb79424d47245ab1e5406cf")
+  r = response.json()
+  df=pd.DataFrame(r['cast'])
   st.markdown(response.status_code)
-  st.markdown(response.content)
+  st.dataframe(df)
+  #themoviedb API - search for movie by id
+  response = requests.get("https://api.themoviedb.org/3/person/1614/movie_credits?api_key=8bab42520fb79424d47245ab1e5406cf")
+  r = response.json()
+  df=pd.DataFrame(r['cast'])
+  st.markdown(response.status_code)
+  st.dataframe(df)
 
   #OMDB API
   response = requests.get("http://www.omdbapi.com/?i=tt2294629&apikey=e6dd17dc")
