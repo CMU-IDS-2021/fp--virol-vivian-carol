@@ -47,7 +47,7 @@ def get_api_data(name):
   crew_list = works_data['crew']
 
   sorted_cast_list = sorted(cast_list, key = lambda i: i['popularity'], reverse=True)
-  sorted_crew_list = sorted(cast_list, key = lambda i: i['popularity'], reverse=True)
+  sorted_crew_list = sorted(crew_list, key = lambda i: i['popularity'], reverse=True)
   
   result['works']['cast'] = sorted_cast_list
   result['works']['crew'] = sorted_crew_list
