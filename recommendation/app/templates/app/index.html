@@ -1,0 +1,72 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+	  <meta charset="utf-8">
+		<link href="https://fonts.googleapis.com/css?family=Work+Sans:400,500,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static '/app/css/styles.css' %}">
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js"></script>
+
+		<title>movie recommendation visualizer</title>
+	</head>
+	<body>
+    <div class="container">
+      <div class="content">
+
+        <div id="input-div">
+          <form method="post">
+            {% csrf_token %}
+            <label for="movie-input">
+              recommendations for:
+            </label>
+
+            <input type="text" value="{{ movie }}" name="movie-input">
+
+            <button type="submit" id="submit-button">submit</button>
+          </form>
+
+          {% if image != "" and image != "/app/images/" %}
+          <div class="average-color" id="movie-average-color">
+            <!-- <input type="checkbox" id="show-original-checkbox">
+            <label> show average movie trailer colors for {{ movie }}</label><br> -->
+
+            <img class='average-color-img' src="{% static image %}" alt="">
+          </div>
+          {% endif %}
+
+        </div>
+
+        <!-- {% if movie_trailer != "" %}
+          <p id="trailer-url">{{ movie_trailer }}</p>
+          <div id="canvas">
+            <script src="{% static '/app/js/sketch.js' %}"></script>
+          </div>
+        {% endif %} -->
+
+        {% if recommended|length > 0 %}
+        <div class="results">
+          {% for rec in recommended %}
+            <p class="recommended-title">{{rec.title}}</p>
+
+            {% if rec.image != "" %}
+            <div class="average-color" id="movie-average-color">
+              <img class="average-color-img" src="{% static rec.image %}" alt="">
+            </div>
+            {% endif %}
+            <br>
+            <br>
+          {% endfor %}
+          <div class="canvas">
+            <script src="{% static '/app/js/sketch.js' %}"></script>
+          </div>
+        </div>
+        {% endif %}
+
+        
+
+      </div>
+    </div>
+	</body>
+</html>
