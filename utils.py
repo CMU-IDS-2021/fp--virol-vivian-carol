@@ -6,6 +6,8 @@ import requests
 
 MOVIEDB_API_URL = 'https://api.themoviedb.org/3'
 MOVIEDB_API_KEY = '8bab42520fb79424d47245ab1e5406cf'
+OMDB_API_URL = 'http://www.omdbapi.com/'
+OMDB_API_KEY = 'e6dd17dc'
 
 def get_moviedb_data(query_url):
   """
@@ -16,6 +18,22 @@ def get_moviedb_data(query_url):
   r.raise_for_status()
   data = r.json()
   return data
+
+def get_moviedb_movie_detail(movie_id):
+  data = get_moviedb_data(f'/movie/{movie_id}?api_key={MOVIEDB_API_KEY}&language=en-US')
+  return data
+
+def get_moviedb_imdb_id(movie_id):
+  return get_moviedb_movie_detail(movie_id)['imdb_id']
+
+def get_OMDB_data(imdb_id):
+  url=f'{OMDB_API_URL}?i={imdb_id}&apikey={OMDB_API_KEY}'
+  r = requests.get(url)
+  r.raise_for_status()
+  data = r.json()
+
+  return data
+
 
 def get_person_id(name):
   """
