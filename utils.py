@@ -42,7 +42,7 @@ def get_api_data(name):
   result['biography'] = biography
 
   # add list of works, sorted by popularity (descending)
-  works_data = get_moviedb_data(f'/person/1614/combined_credits?api_key={MOVIEDB_API_KEY}')
+  works_data = get_moviedb_data(f'/person/{person_id}/combined_credits?api_key={MOVIEDB_API_KEY}')
   cast_list = works_data['cast']
   crew_list = works_data['crew']
 
