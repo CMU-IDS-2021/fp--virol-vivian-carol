@@ -92,3 +92,19 @@ def get_genre_by_id(genre_id):
 
   raise ValueError(f"Genre with ID {genre_id} not found.")
 
+
+def handle_get_moviedb_movie_detail(movie_id):
+  try:
+    result = get_moviedb_movie_detail(movie_id)
+    return result
+  except:
+    pass
+
+def handle_get_moviedb_imdb_id(movie_id):
+  try:
+    result = get_moviedb_imdb_id(movie_id)
+    return result
+  except:
+    pass
+
+
