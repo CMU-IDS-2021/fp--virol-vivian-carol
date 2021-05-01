@@ -54,10 +54,21 @@ def get_api_data(name):
 
   person_id = get_person_id(name) # get person id by name
   data = get_moviedb_data(f'/person/{person_id}?api_key={MOVIEDB_API_KEY}')
-
   # add biography
   biography = data['biography']
   result['biography'] = biography
+  name = data['name']
+  result['name'] = name
+  birthday = data['birthday']
+  result['birthday'] = birthday
+  popularity = data['popularity']
+  result['popularity'] = popularity
+  profile_path = data['profile_path']
+  result['profile_path'] = profile_path
+  homepage = data['homepage']
+  result['homepage'] = homepage
+  place_of_birth = data['place_of_birth']
+  result['place_of_birth'] = place_of_birth
 
   # add list of works, sorted by popularity (descending)
   works_data = get_moviedb_data(f'/person/{person_id}/combined_credits?api_key={MOVIEDB_API_KEY}')
