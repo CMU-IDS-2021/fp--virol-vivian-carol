@@ -1,3 +1,4 @@
+import re
 import streamlit as st
 import pandas as pd
 import altair as alt
@@ -119,3 +120,6 @@ def handle_get_moviedb_imdb_id(movie_id):
     pass
 
 
+def get_number(text):
+  cleaned = re.sub(r'[^0-9\.]', '', str(text))
+  return round(float(cleaned), 1) if cleaned else 0.0
