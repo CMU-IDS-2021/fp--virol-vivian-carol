@@ -123,3 +123,10 @@ def handle_get_moviedb_imdb_id(movie_id):
 def get_number(text):
   cleaned = re.sub(r'[^0-9\.]', '', str(text))
   return round(float(cleaned), 1) if cleaned else 0.0
+
+def add_portion_columns(df):
+  return df.assign(
+    boxoffice_of_revenue=df.BoxOffice/df.revenue,
+    revenue_of_budget=df.revenue/df.budget,
+    boxoffice_of_budget=df.BoxOffice/df.budget
+  )

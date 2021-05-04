@@ -49,6 +49,7 @@ def with_result(data):
       new_arr.append(row)
 
   related_movies_df = pd.DataFrame(new_arr)
+  related_movies_df.loc[:, 'runtime'] = related_movies_df.runtime.fillna(0)
   related_movies_df = related_movies_df[related_movies_df.media_type == 'movie']
   non_zero_related_movies_df = related_movies_df[(related_movies_df.BoxOffice > 0) & (related_movies_df.revenue > 0) & (related_movies_df.budget > 0)]
   movie_count = related_movies_df.shape[0]
@@ -61,6 +62,19 @@ def with_result(data):
   budget_mean = round(budget_mean,2)
   box_office_mean = round(box_office_mean,2)
   revenue_mean = round(revenue_mean,2)
+
+
+  # add mean value column
+  related_movies_df = related_movies_df.assign(
+    imdb_rate_mean=imdb_rate_mean,
+    budget_mean=budget_mean,
+    box_office_mean=box_office_mean,
+    revenue_mean=revenue_mean
+    )
+
+  # add ratio column
+  non_zero_related_movies_df = add_portion_columns(non_zero_related_movies_df)
+
   d_avg = {'revenue mean': [revenue_mean], 'box office mean': [box_office_mean],'imdbRating': [imdb_rate_mean], 'budget mean': [budget_mean], 'runtime': [runtime_mean]}
   #4 column biography
   col1, col2, col3, col4 = st.beta_columns((1,1,1,1))
