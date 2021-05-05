@@ -81,7 +81,7 @@ def get_movie_trailer_url(title):
   return youtube_url
 
 def get_recommended_movie_data(title):
-  recCount = 3
+  recCount = 5
   results = []
 
   moviedb_data = get_movie_api_data(title)
@@ -103,6 +103,8 @@ def get_recommended_movie_data(title):
     rec_movie_data["revenue"] = rec_moviedb_data["revenue"]
     rec_movie_data["budget"] = rec_moviedb_data["budget"]
     rec_movie_data["overview"] = rec_moviedb_data["overview"]
+    rec_movie_data["popularity"] = rec_moviedb_data["popularity"]
+    rec_movie_data["release date"] = rec_moviedb_data["release_date"]
 
     rec_genres = []
     for g in rec_moviedb_data["genres"]:

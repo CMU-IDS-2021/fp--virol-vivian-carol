@@ -145,5 +145,24 @@ input {
   padding: 5px 10px;
 }
 
+.charts {
+  margin: 5em 0em;
+  width: 100%;
+  height: auto;
+}
 
+.chart-div {
+  width: 100%;
+  margin: 0;
+  height: 40em;
+}
 
+.vega-embed {
+  /* padding: 0!important; */
+  /* padding-right: 0!important; */
+}
+
+.marks {
+  /* width: 100%!important;
+  height: 100%!important; */
+}
