@@ -13,8 +13,8 @@ def without_result():
 def with_result(data):
 #biography
   name = data['name']
-  st.markdown('# '+name)
-  st.subheader(':popcorn: Basic Bio:')
+  st.markdown('# We present you:'+name)
+  st.markdown('''<a id="title">:popcorn: Basic Bio </a>''', unsafe_allow_html=True)
   
   with st.beta_expander("Show me the detail biography!"):
     col1, col2 = st.beta_columns((1,2))
@@ -26,8 +26,6 @@ def with_result(data):
     col2.markdown(bio)
 
   works = data['works']['cast']
-
-  #name = data['works']['cast']
   df=pd.DataFrame(works)
 
   #data preperation - line chart
@@ -59,17 +57,15 @@ def with_result(data):
   runtime_mean = related_movies_df[related_movies_df.runtime > 0].runtime.mean()
   budget_mean = related_movies_df[related_movies_df.budget > 0].budget.mean()
   imdb_rate_mean = round(imdb_rate_mean, 2)
-  budget_mean = round(budget_mean,2)
+  runtime_mean = round(runtime_mean,2)
   box_office_mean = round(box_office_mean,2)
   revenue_mean = round(revenue_mean,2)
 
 
   # add mean value column
   related_movies_df = related_movies_df.assign(
-    imdb_rate_mean=imdb_rate_mean,
-    budget_mean=budget_mean,
-    box_office_mean=box_office_mean,
-    revenue_mean=revenue_mean
+    imdbRating_mean=imdb_rate_mean,
+    runtime_mean=runtime_mean
     )
 
   # add ratio column
@@ -89,7 +85,6 @@ def with_result(data):
   col3.markdown(popularity)
   col4.markdown('**Number of movies**')
   col4.markdown(movie_count)
-  #st.subheader(':popcorn: Average numbers of the works:')
   col1, col2, col3, col4 = st.beta_columns((1,1,1,1))
   col1.markdown('**Avg Revenue**')
   col1.markdown(f'{revenue_mean}')
@@ -117,18 +112,16 @@ def with_result(data):
   movie_genre_summary.loc[:, 'Movie'] = movie_genre_summary.Movie.apply(lambda x: x if isinstance(x, str) else ', '.join(x.tolist()))
  
   #bar chart-description
-  st.subheader(":popcorn: What genres are the works in?")
-  st.markdown("You can interact with the chart by:")
-  st.markdown("Hover on the bar to see the list of the movies.")
-
+  st.markdown('''<a id="title">:popcorn: What genres are the works in? </a>''', unsafe_allow_html=True)
+  st.markdown("You can interact with the chart by hovering on the bar.")
   with st.beta_expander("See the dataframe."):
+    st.markdown("movie and genres is in a one-to-many relationship.")
     st.dataframe(movie_genre_df)
  
-  
   #bar chart-genres count
   df_bar=movie_genre_summary.copy()
   #st.dataframe(df)
-  bar_genres = alt.Chart(df_bar).mark_bar(color='#8624F5', opacity=0.8).encode(
+  bar_genres = alt.Chart(df_bar).mark_bar(color='#0D26C4', opacity=0.8).encode(
     alt.X('Genres:O',
       sort={"field": "Genres", "order": "ascending"},
       #title="(V)The correspondent decade of albums Issued Date"  
@@ -148,10 +141,10 @@ def with_result(data):
     st.write(bar_genres)
 
   #avg_bar chart-description
-  st.subheader(":popcorn: What's the financial structure of the works?")
+  st.markdown('''<a id="title">:popcorn: What's the financial structure of the works? </a>''', unsafe_allow_html=True)
   st.markdown("You can interact with the chart by")
   st.markdown("1. Select checkbox to layer the attributes.")
-  st.markdown("1. Hover on the bar for the detail.")  
+  st.markdown("2. Hover on the bar for the detail.")  
   df_z = pd.DataFrame(non_zero_related_movies_df)
   with st.beta_expander("See the dataframe."):
     st.dataframe(df_z)
@@ -160,49 +153,37 @@ def with_result(data):
   base = alt.Chart(df_z).encode(
         x=alt.X('title', sort=alt.EncodingSortField(field='release_date', order='ascending'),title="The title of films order by issued date")
   )
-  boxoffice_chart= base.mark_bar(color='#8624F5', opacity=0.5, thickness=5).encode(
+  boxoffice_chart= base.mark_bar(color='#0D26C4', opacity=0.5, thickness=5).encode(
     alt.Y('BoxOffice',
       scale=alt.Scale(zero=True),
       axis=alt.Axis(tickMinStep=1),
       #title='(V)Average_'+ option +'_by_Decade'
       ),
-    tooltip=['BoxOffice'],
+    tooltip=['BoxOffice', 'boxoffice_of_revenue', 'boxoffice_of_budget'],
 
   ).properties(
     width=600,
     height=600
   )
-  revenue_chart= base.mark_bar(color='#8624F5', opacity=0.2, thickness=5).encode(
+  revenue_chart= base.mark_bar(color='#64AF65', opacity=0.7, thickness=5).encode(
     alt.Y('revenue',
       scale=alt.Scale(zero=True),
       axis=alt.Axis(tickMinStep=1),
       #title='(V)Average_'+ option +'_by_Decade'
       ),
-    tooltip=['revenue'],
+    tooltip=['revenue','revenue_of_budget','boxoffice_of_revenue'],
 
   ).properties(
     width=600,
     height=600
   )
-  budget_chart= base.mark_bar(color='#000011', opacity=0.2, thickness=5).encode(
+  budget_chart= base.mark_bar(color='#FF5800', opacity=0.6, thickness=5).encode(
     alt.Y('budget',
       scale=alt.Scale(zero=True),
       axis=alt.Axis(tickMinStep=1),
       #title='(V)Average_'+ option +'_by_Decade'
       ),
-    tooltip=['budget'],
-
-  ).properties(
-    width=600,
-    height=600
-  )
-  null_chart= base.mark_bar(color='#000011', opacity=0, thickness=5).encode(
-    alt.Y('budget',
-      scale=alt.Scale(zero=True),
-      axis=alt.Axis(tickMinStep=1),
-      #title='(V)Average_'+ option +'_by_Decade'
-      ),
-    tooltip=['budget'],
+    tooltip=['budget','revenue_of_budget','boxoffice_of_budget'],
 
   ).properties(
     width=600,
@@ -212,7 +193,7 @@ def with_result(data):
   with st.beta_expander("See the Chart."):
 
     col1, col2, col3 = st.beta_columns((1,1,1))
-    chart = null_chart
+    
     #checkbox
     agree1 = col1.checkbox('box office')
     agree2 = col2.checkbox('revenue')
@@ -241,7 +222,7 @@ def with_result(data):
 
 
   #line chart-description
-  st.subheader(":popcorn: How is IMDB Rating/runtime distribute across the work?")
+  st.markdown('''<a id="title">:popcorn: How is IMDB Rating/runtime distributes across the works? </a>''', unsafe_allow_html=True)
   st.markdown("You can interact with the chart by:")
   st.markdown("1. Select the attribute in the dropdown.")
   st.markdown("2. Hover on the line to see the numbers.")
@@ -263,7 +244,7 @@ def with_result(data):
   base = alt.Chart(df).encode(
         x=alt.X('title', sort=alt.EncodingSortField(field='release_date', order='ascending'),title="The title of films order by issued date")
   )
-  line_A = base.mark_line(color='#5276A7').encode(
+  line_A = base.mark_line(color='#0D26C4').encode(
     alt.Y(option, axis=alt.Axis(titleColor='#5276A7')),
   ).properties(
     width=600,
@@ -278,11 +259,11 @@ def with_result(data):
     nearest
   )
   # Draw points on the line, and highlight based on selection
-  points_A = line_A.mark_point().encode(
+  points_A = line_A.mark_point(color='#0D26C4').encode(
     opacity=alt.condition(nearest, alt.value(1), alt.value(0))
   )
   # Draw text labels near the points, and highlight based on selection
-  text_A = line_A.mark_text(align='left', dx=5, dy=-5).encode(
+  text_A = line_A.mark_text(color='#0D26C4',align='left', dx=5, dy=-5).encode(
     text=alt.condition(nearest, option, alt.value(' '))
   )
 
@@ -292,24 +273,25 @@ def with_result(data):
   ).transform_filter(
     nearest
   )
-  #rule
-  rule = alt.Chart(df).mark_rule(color='red').encode(
-    y='mean('+option+'):Q',
-    tooltip=['mean('+option+'):Q']
 
+  line_B = base.mark_line(color='#FF5800').encode(
+    alt.Y(option+'_mean', axis=alt.Axis(titleColor='#5276A7')),
+  ).properties(
+    width=600,
+    height=600
   )
   # Draw points on the line, and highlight based on selection
-  points_B = rule.mark_point(color='#F18727').encode(
+  points_B = line_B.mark_point(color='#FF5800').encode(
     opacity=alt.condition(nearest, alt.value(1), alt.value(0))
   )
   # Draw text labels near the points, and highlight based on selection
-  text_B = rule.mark_text(align='left', dx=10, dy=-5, color='#F18727').encode(
-    text=alt.condition(nearest, 'mean('+option+'):Q', alt.value(' '))
+  text_B = line_B.mark_text(align='left', dx=10, dy=-5, color='#FF5800').encode(
+    text=alt.condition(nearest, option+'_mean', alt.value(' '))
   )   
   
   chart1 = alt.layer(line_A,points_A,text_A)
   #chart1 = alt.layer(chart1).resolve_scale(y='independent')
-  chart1 = alt.layer(chart1,selectors,rules,rule,points_B,text_B)
+  chart1 = alt.layer(chart1,selectors,rules,line_B,points_B,text_B)
   chart2 = alt.layer(line_A,points_A,text_A)  
   chart2 = alt.layer(chart2).resolve_scale(y='independent')
   chart2 = alt.layer(chart2,selectors,rules)
@@ -323,11 +305,34 @@ def with_result(data):
     else:  
       st.write(chart2)
 def main():
+  # use custom css
+  with open('./styles.css') as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+    st.markdown('''<a id="header">:clapper:Film Producer/Actor Data Jam</a>''', unsafe_allow_html=True)
+    st.markdown('This platform allows you to learn about the film producer/actor and their works.')
 
-  st.header(':clapper:Film Producer/Actor Data Jam!')
-  st.markdown('This platform allows you to learn about the film producer/actor by their works.')
+    st.markdown("""
+    <img src="https://user-images.githubusercontent.com/7588145/117094736-908c0e80-ad32-11eb-8821-f5ee0fa6df02.png" id="bowie-img">
+  """,unsafe_allow_html=True)
+
+  with st.beta_expander("What is in the platform?"):
+    st.markdown("This platform is consists of five parts:")
+    st.markdown('''
+              <ul id="project-parts-list">
+              <li><a class="link" href="#basic-bio">1. Director/Actor's biography</a></li>
+              <li><a class="link" href="#what-genres-are-the-works-in">2. Chart - What genres are the works in?</a></li>
+              <li><a class="link" href="#what-s-the-financial-structure-of-the-works">3. Chart - What's the financial structure of the works?</a></li>
+              <li><a class="link" href="#how-is-imdb-rating-runtime-distributes-across-the-works">4. Chart - How is IMDB Rating/runtime distributed across the works?</a></li>
+              <li><a class="link" href="">5. Recommendation System</a></li>
+              </ul>
+              ''', unsafe_allow_html=True)  
+    st.markdown("")
+    st.markdown("<span class='small'>This project was completed by <strong>Vivian Young</strong> and <strong>Carol Ho</strong> for the Interactive Data Science (Spring 2021) course taught by Professors Adam Perer and Hendrik Strobelt.</span>", unsafe_allow_html=True)
+    st.write("Original Dataset from the OMDB API and themoviedb API.")
+    st.write("Photo by Denise Jans on Unsplash")
   add_textinput = st.text_input("Search for film producer/actor:", "Ang Lee")
-  
+      
+
   data = get_api_data(add_textinput)
   print(data)
   if data and data.get('works', {}).get('cast'):

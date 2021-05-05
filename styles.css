@@ -6,14 +6,24 @@ body,html {
 
 .stApp {
   background: rgb(186,161,231)!important;
-  background: linear-gradient(180deg, rgba(186,161,231,1) 0%, rgba(225,199,227,1) 20%, rgba(255,255,255,1) 100%)!important;
+  background: linear-gradient(180deg, #E2E9FD 0%, #F5F8FF 100%)!important;
 }
 
  /* remove top line */
 .css-kywgdc {
   display:none!important;
 }
+#header{
+  color: #0D26C4!important;
+  font-size: 2rem;
+  font-weight: 700;
+}
+#title{
+  color: #0D26C4!important;
+  font-size: 1.2rem;
+  font-weight: 500;
 
+}
 #bowie-img{
   width:100%;
   margin-top: 50px;
@@ -31,6 +41,7 @@ a {
 .st-c2 .st-ch .st-ci .st-ae .st-af .st-ag .st-cj .st-ai .st-aj {
   color: white!important;
 }
+
 
 .link {
   font-weight: 500;
