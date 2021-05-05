@@ -1,5 +1,6 @@
 import requests
 import csv
+from youtubesearchpython import VideosSearch
 from django.contrib.staticfiles.storage import staticfiles_storage
 
 from app.colors import *
@@ -9,7 +10,6 @@ MOVIEDB_API_KEY = '8bab42520fb79424d47245ab1e5406cf'
 
 OMDB_API_KEY = 'e6dd17dc'
 
-YOUTUBE_CSV_FILE = "ml-youtube.csv"
 
 def get_moviedb_data(query_url):
   """
@@ -76,65 +76,57 @@ def get_movie_api_data(title):
   return result
 
 def get_movie_trailer_url(title):
-  moviedb_data = get_movie_api_data(title)
-  data = get_moviedb_data(f'/movie/{moviedb_data["id"]}?api_key={MOVIEDB_API_KEY}')  
-  title = f"{data['original_title']} ({data['release_date'][0:4]})"
-
-  # search for youtube id in csv file
-  csv_url = staticfiles_storage.path(YOUTUBE_CSV_FILE)
-  csv_file = csv.reader(open(csv_url, 'r'), delimiter=',')
-
-  for row in csv_file:
-    # print(row)
-    if title == row[2]:
-      youtube_id = row[0]
-      return f'https://www.youtube.com/watch?v={youtube_id}'
-
-  return ''
+  trailer_search_data = VideosSearch(title + 'trailer', limit = 1).result()
+  youtube_url = trailer_search_data['result'][0]['link']
+  return youtube_url
 
 def get_recommended_movie_data(title):
+  recCount = 3
   results = []
 
   moviedb_data = get_movie_api_data(title)
   rec_data = get_moviedb_data(f'/movie/{moviedb_data["id"]}/similar?api_key={MOVIEDB_API_KEY}')  
 
-  for rec_movie in rec_data['results'][0:10]:
+  for rec_movie in rec_data['results'][0:recCount]:
     rec_dict = {}
 
-    # get movie title in ml-youtube.csv format
     original_title = rec_movie['original_title']
     print('\n\n' + original_title)
-    title = f"{original_title} ({rec_movie['release_date'][0:4]})"
-    # search for youtube id in csv file
-    csv_url = staticfiles_storage.path(YOUTUBE_CSV_FILE)
-    csv_file = csv.reader(open(csv_url, 'r'), delimiter=',')
 
-    youtube_found = False
-    youtube_id = ''
+    rec_dict["title"] = original_title # add title
 
-    # find youtube id in csv file
-    for row in csv_file:
-      # print(row)
-      if title == row[2]:
-        youtube_id = row[0]
-        youtube_found = True
+    # add moviedb data 
+    rec_movie_id = rec_movie['id']
+    rec_moviedb_data = get_moviedb_data(f'/movie/{rec_movie_id}?api_key={MOVIEDB_API_KEY}')
 
-    # get youtube video
-    if youtube_found:
-      youtube_url = f"https://www.youtube.com/watch?v={youtube_id}"
+    rec_movie_data = {}
+    rec_movie_data["revenue"] = rec_moviedb_data["revenue"]
+    rec_movie_data["budget"] = rec_moviedb_data["budget"]
+    rec_movie_data["overview"] = rec_moviedb_data["overview"]
+
+    rec_genres = []
+    for g in rec_moviedb_data["genres"]:
+      rec_genres.append(g["name"])
+    rec_movie_data["genres"] = rec_genres
+
+    # check if this image already exists
+    if not os.path.isfile(f"app/static/app/images/{original_title}.png"):
+      youtube_url = get_movie_trailer_url(original_title)
       print(youtube_url)
 
-      # get average color
-      colors_img = average_colors(original_title, youtube_url)
+      if youtube_url:
+        # get average color
+        colors_img = average_colors(original_title, youtube_url)
 
-      if colors_img and colors_img != "":
-        rec_dict['title'] = title
-        rec_dict['trailer url'] = youtube_url
-        # rec_dict['data'] = rec_movie
-        rec_dict['image'] = '/app/images/' + colors_img
-        print(colors_img)
+        if colors_img and colors_img != "":
+          rec_dict["trailer url"] = youtube_url
+          rec_dict["image"] = '/app/images/' + colors_img
+    else:
+      print('image already exists')
+      rec_dict["image"] = f'/app/images/{original_title}.png'
 
-        results.append(rec_dict)
+    rec_dict["data"] = rec_movie_data
+    results.append(rec_dict)
 
   return results
 

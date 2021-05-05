@@ -1,0 +1,7 @@
+.DS_Store
+venv/
+*.pyc
+*.png
+recommendation/staticfiles/downloads/*
+recommendation/app/static/app/images/*
+recommendation/app/__pycache__/*

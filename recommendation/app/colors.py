@@ -5,6 +5,8 @@ import cv2
 import os 
 import shutil
 from PIL import Image, ImageStat, ImageDraw
+import numpy as np
+from sklearn.cluster import KMeans
 
 #Get average color of frames
 def get_average_color(image_name, color_list, frame_folder):
