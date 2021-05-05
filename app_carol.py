@@ -157,7 +157,7 @@ def with_result(data):
     alt.Y('BoxOffice',
       scale=alt.Scale(zero=True),
       axis=alt.Axis(tickMinStep=1),
-      #title='(V)Average_'+ option +'_by_Decade'
+      title='boxoffice(USD)'
       ),
     tooltip=['BoxOffice', 'boxoffice_of_revenue', 'boxoffice_of_budget'],
 
@@ -169,7 +169,7 @@ def with_result(data):
     alt.Y('revenue',
       scale=alt.Scale(zero=True),
       axis=alt.Axis(tickMinStep=1),
-      #title='(V)Average_'+ option +'_by_Decade'
+      title='revenue(USD)'
       ),
     tooltip=['revenue','revenue_of_budget','boxoffice_of_revenue'],
 
@@ -181,14 +181,14 @@ def with_result(data):
     alt.Y('budget',
       scale=alt.Scale(zero=True),
       axis=alt.Axis(tickMinStep=1),
-      #title='(V)Average_'+ option +'_by_Decade'
+      title='budget(USD)'
       ),
-    tooltip=['budget','revenue_of_budget','boxoffice_of_budget'],
+    tooltip=['title','budget','revenue_of_budget','boxoffice_of_budget'],
 
   ).properties(
     width=600,
     height=600
-  )
+)
 
   with st.beta_expander("See the Chart."):
 
@@ -247,7 +247,7 @@ def with_result(data):
   line_A = base.mark_line(color='#0D26C4').encode(
     alt.Y(option, axis=alt.Axis(titleColor='#5276A7')),
   ).properties(
-    width=600,
+    width=800,
     height=600
   )
   # Transparent selectors across the chart. This is what tells us
@@ -260,7 +260,7 @@ def with_result(data):
   )
   # Draw points on the line, and highlight based on selection
   points_A = line_A.mark_point(color='#0D26C4').encode(
-    opacity=alt.condition(nearest, alt.value(1), alt.value(0))
+    opacity=alt.condition(nearest, alt.value(1), alt.value(0)),
   )
   # Draw text labels near the points, and highlight based on selection
   text_A = line_A.mark_text(color='#0D26C4',align='left', dx=5, dy=-5).encode(
@@ -270,6 +270,7 @@ def with_result(data):
   # Draw a rule at the location of the selection
   rules = alt.Chart(df).mark_rule(color='gray').encode(
     x=alt.X('title', sort=alt.EncodingSortField(field='release_date', order='ascending')),
+    tooltip=['title', 'Year']
   ).transform_filter(
     nearest
   )
@@ -277,7 +278,7 @@ def with_result(data):
   line_B = base.mark_line(color='#FF5800').encode(
     alt.Y(option+'_mean', axis=alt.Axis(titleColor='#5276A7')),
   ).properties(
-    width=600,
+    width=800,
     height=600
   )
   # Draw points on the line, and highlight based on selection
