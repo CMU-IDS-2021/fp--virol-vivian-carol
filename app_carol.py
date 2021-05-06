@@ -8,20 +8,21 @@ from utils import *
 
 def without_result():
   pass
-  st.markdown("We couldnt find the result!")
+  st.markdown("We couldn't find the result!")
 
 def with_result(data):
 #biography
   name = data['name']
-  st.markdown('# We present you:'+name)
-  st.markdown('''<a id="title">:popcorn: Basic Bio </a>''', unsafe_allow_html=True)
+  st.markdown('# Presenting ... ' + name + '!')
+  st.markdown("")
+  st.markdown("")
+  st.markdown("")
+  st.markdown('''<a id="title">:popcorn: Biography </a>''', unsafe_allow_html=True)
   
-  with st.beta_expander("Show me the detail biography!"):
+  with st.beta_expander("Show me the full biography!"):
     col1, col2 = st.beta_columns((1,2))
     bio = data['biography']
-    pic_url = 'https://image.tmdb.org/t/p/w300/'
-    profile_path = data['profile_path']
-    profile_path = pic_url + profile_path
+    profile_path = f'https://image.tmdb.org/t/p/w300/{data["profile_path"]}'
     col1.image(profile_path)
     col2.markdown(bio)
 
@@ -112,7 +113,10 @@ def with_result(data):
   movie_genre_summary.loc[:, 'Movie'] = movie_genre_summary.Movie.apply(lambda x: x if isinstance(x, str) else ', '.join(x.tolist()))
  
   #bar chart-description
-  st.markdown('''<a id="title">:popcorn: What genres are the works in? </a>''', unsafe_allow_html=True)
+  st.markdown("")
+  st.markdown("")
+  st.markdown("")
+  st.markdown('''<a id="title">:popcorn: What genres are their works in? </a>''', unsafe_allow_html=True)
   st.markdown("You can interact with the chart by hovering on the bar.")
   with st.beta_expander("See the dataframe."):
     st.markdown("movie and genres is in a one-to-many relationship.")
@@ -141,7 +145,10 @@ def with_result(data):
     st.write(bar_genres)
 
   #avg_bar chart-description
-  st.markdown('''<a id="title">:popcorn: What's the financial structure of the works? </a>''', unsafe_allow_html=True)
+  st.markdown("")
+  st.markdown("")
+  st.markdown("")
+  st.markdown('''<a id="title">:popcorn: What is the financial analysis of their movies? </a>''', unsafe_allow_html=True)
   st.markdown("You can interact with the chart by")
   st.markdown("1. Select checkbox to layer the attributes.")
   st.markdown("2. Hover on the bar for the detail.")  
@@ -216,21 +223,19 @@ def with_result(data):
     elif agree3:
         st.write(budget_chart)
 
-    
-
-
-
-
   #line chart-description
-  st.markdown('''<a id="title">:popcorn: How is IMDB Rating/runtime distributes across the works? </a>''', unsafe_allow_html=True)
+  st.markdown("")
+  st.markdown("")
+  st.markdown("")
+  st.markdown('''<a id="title">:popcorn: How are IMDB Ratings / runtime distributed across their work? </a>''', unsafe_allow_html=True)
   st.markdown("You can interact with the chart by:")
   st.markdown("1. Select the attribute in the dropdown.")
   st.markdown("2. Hover on the line to see the numbers.")
-  st.markdown("3. Compare with the average value with checkbox.")
+  st.markdown("3. Compare with the average value by clicking the checkbox.")
 
    #select-feature
   option = st.selectbox(
-  'Select one attribute you would like to see.',
+  'Select the attribute you would like to see.',
   ('imdbRating','runtime'))
   #line chart  
   nearest = alt.selection(type='single', nearest=True, on='mouseover',
@@ -300,40 +305,49 @@ def with_result(data):
 
   with st.beta_expander("See the Chart."):
     
-    compare = st.checkbox('Compare with the average of the works.')
+    compare = st.checkbox('Compare with the average of all movies.')
     if compare:
       st.write(chart1)
     else:  
       st.write(chart2)
+
+
 def main():
   # use custom css
   with open('./styles.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
   
-  st.markdown('''<a id="header">:clapper:Film Producer/Actor Data Jam</a>''', unsafe_allow_html=True)
-  st.markdown('This platform allows you to learn about the film producer/actor and their works.')
+  st.markdown('<a id="header">:clapper: Film Producer / Actor Data Jam</a>''', unsafe_allow_html=True)
+  st.markdown('Learn about your favorite film producers / actors and their works.')
 
   st.markdown("""
-    <img src="https://user-images.githubusercontent.com/7588145/117094736-908c0e80-ad32-11eb-8821-f5ee0fa6df02.png" id="bowie-img">
+    <img src="https://user-images.githubusercontent.com/7588145/117094736-908c0e80-ad32-11eb-8821-f5ee0fa6df02.png" id="person-img">
   """,unsafe_allow_html=True)
 
-  with st.beta_expander("What is in the platform?"):
-    st.markdown("This platform is consists of five parts:")
+  with st.beta_expander("Overview"):
+    st.markdown("This platform consists of five parts:")
     st.markdown('''
               <ul id="project-parts-list">
-              <li><a class="link" href="#basic-bio">1. Director/Actor's biography</a></li>
-              <li><a class="link" href="#what-genres-are-the-works-in">2. Chart - What genres are the works in?</a></li>
-              <li><a class="link" href="#what-s-the-financial-structure-of-the-works">3. Chart - What's the financial structure of the works?</a></li>
-              <li><a class="link" href="#how-is-imdb-rating-runtime-distributes-across-the-works">4. Chart - How is IMDB Rating/runtime distributed across the works?</a></li>
-              <li><a class="link" href="">5. Recommendation System</a></li>
+              <li><a class="link" href="#basic-bio">1. Film producer / actor's biography</a></li>
+              <li><a class="link" href="#what-genres-are-the-works-in">2. Chart - movie genres</a></li>
+              <li><a class="link" href="#what-s-the-financial-structure-of-the-works">3. Chart - financial analysis</a></li>
+              <li><a class="link" href="#how-is-imdb-rating-runtime-distributes-across-the-works">4. Chart - rating + runtime distributions</a></li>
+              <li><a class="link" href="">5. Movie Color Visualization App</a></li>
               </ul>
               ''', unsafe_allow_html=True)  
     st.markdown("")
+
     st.markdown("<span class='small'>This project was completed by <strong>Vivian Young</strong> and <strong>Carol Ho</strong> for the Interactive Data Science (Spring 2021) course taught by Professors Adam Perer and Hendrik Strobelt.</span>", unsafe_allow_html=True)
-    st.write("Original Dataset from the OMDB API and themoviedb API.")
+
+    st.write("Technologies used:")
+    st.write("\t+ OMDB API")
+    st.write("\t+ TheMovieDB API")
+    st.write("\t+ Node.js + Express")
+
+    st.markdown("")
     st.write("Photo by Denise Jans on Unsplash")
 
-  add_textinput = st.text_input("Search for film producer/actor:", "Ang Lee")
+  add_textinput = st.text_input("Search for film producer / actor:", "Ang Lee")
       
   data = get_api_data(add_textinput)
   print(data)
@@ -343,8 +357,10 @@ def main():
   else:
     without_result()
 
-  # components.iframe("https://movie-color-viz.herokuapp.com/")
-  st.markdown("<br><br><h3>🎨 Movie colors visualizer</h3>",unsafe_allow_html=True)
+  st.markdown("")
+  st.markdown("")
+  st.markdown("")
+  st.markdown('<a id="title">:popcorn: Movie colors visualizer </a>', unsafe_allow_html=True)
   st.markdown('<a href="https://movie-color-viz.herokuapp.com/">live app</a>',unsafe_allow_html=True)
   st.markdown("""
     <iframe src="https://movie-color-viz.herokuapp.com/" id="iframe" style="width:100%;height:800px;">
