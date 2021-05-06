@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import altair as alt
 import plotly.express as px
@@ -309,10 +310,11 @@ def main():
   # use custom css
   with open('./styles.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-    st.markdown('''<a id="header">:clapper:Film Producer/Actor Data Jam</a>''', unsafe_allow_html=True)
-    st.markdown('This platform allows you to learn about the film producer/actor and their works.')
+  
+  st.markdown('''<a id="header">:clapper:Film Producer/Actor Data Jam</a>''', unsafe_allow_html=True)
+  st.markdown('This platform allows you to learn about the film producer/actor and their works.')
 
-    st.markdown("""
+  st.markdown("""
     <img src="https://user-images.githubusercontent.com/7588145/117094736-908c0e80-ad32-11eb-8821-f5ee0fa6df02.png" id="bowie-img">
   """,unsafe_allow_html=True)
 
@@ -331,15 +333,25 @@ def main():
     st.markdown("<span class='small'>This project was completed by <strong>Vivian Young</strong> and <strong>Carol Ho</strong> for the Interactive Data Science (Spring 2021) course taught by Professors Adam Perer and Hendrik Strobelt.</span>", unsafe_allow_html=True)
     st.write("Original Dataset from the OMDB API and themoviedb API.")
     st.write("Photo by Denise Jans on Unsplash")
+
   add_textinput = st.text_input("Search for film producer/actor:", "Ang Lee")
       
-
   data = get_api_data(add_textinput)
   print(data)
+
   if data and data.get('works', {}).get('cast'):
     with_result(data)
   else:
     without_result()
+
+  # components.iframe("https://movie-color-viz.herokuapp.com/")
+  st.markdown("<br><br><h3>🎨 Movie colors visualizer</h3>",unsafe_allow_html=True)
+  st.markdown('<a href="https://movie-color-viz.herokuapp.com/">live app</a>',unsafe_allow_html=True)
+  st.markdown("""
+    <iframe src="https://movie-color-viz.herokuapp.com/" id="iframe" style="width:100%;height:800px;">
+  """,unsafe_allow_html=True)
+
+  
 
 
 if __name__ == '__main__':
