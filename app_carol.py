@@ -2,7 +2,6 @@ import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
 import altair as alt
-import plotly.express as px
 import requests
 from utils import *
 
