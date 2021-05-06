@@ -326,7 +326,7 @@ def main():
               <li><a class="link" href="#what-genres-are-the-works-in">2. Chart - What genres are the works in?</a></li>
               <li><a class="link" href="#what-s-the-financial-structure-of-the-works">3. Chart - What's the financial structure of the works?</a></li>
               <li><a class="link" href="#how-is-imdb-rating-runtime-distributes-across-the-works">4. Chart - How is IMDB Rating/runtime distributed across the works?</a></li>
-              <li><a class="link" href="">5. Recommendation System</a></li>
+              <li><a class="link" href="">5. Movie colors visualizer</a></li>
               </ul>
               ''', unsafe_allow_html=True)  
     st.markdown("")
@@ -345,7 +345,9 @@ def main():
     without_result()
 
   # components.iframe("https://movie-color-viz.herokuapp.com/")
-  st.markdown("<br><br><h3>🎨 Movie colors visualizer</h3>",unsafe_allow_html=True)
+  st.markdown('''<a id="title">:popcorn: Movie colors visualizer </a>''', unsafe_allow_html=True)
+
+  #st.markdown("<br><br><h3>🎨 Movie colors visualizer</h3>",unsafe_allow_html=True)
   st.markdown('<a href="https://movie-color-viz.herokuapp.com/">live app</a>',unsafe_allow_html=True)
   st.markdown("""
     <iframe src="https://movie-color-viz.herokuapp.com/" id="iframe" style="width:100%;height:800px;">
