@@ -1,7 +1,6 @@
 .DS_Store
 venv/
 *.pyc
-*.png
-recommendation/staticfiles/downloads/*
-recommendation/app/static/app/images/*
-recommendation/app/__pycache__/*
+movie-rec-viz/node_modules
+npm-debug.log
+/*.env
