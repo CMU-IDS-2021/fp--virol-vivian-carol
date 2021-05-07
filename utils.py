@@ -2,7 +2,6 @@ import re
 import streamlit as st
 import pandas as pd
 import altair as alt
-import plotly.express as px
 import requests
 
 MOVIEDB_API_URL = 'https://api.themoviedb.org/3'
