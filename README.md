@@ -3,7 +3,7 @@
 ![image](https://user-images.githubusercontent.com/24282522/117394223-6154d900-aebb-11eb-8241-cc42b014bd29.png)
 
 * **Online URL**: https://share.streamlit.io/cmu-ids-2021/fp--virol-vivian-carol/main/app_carol.py
-* **Team members**:
+* **Team members**: Vivian Young, Carol Ho
   * Contact person: vmyoung@andrew.cmu.edu
   * tingyunh@andrew.cmu.edu
 * **Track**: Interactive Visualization/Application
