@@ -87,10 +87,12 @@ const getRecommendedMovies = async (movieName, numRecs=5) => {
 }
 
 const filterDictList = (dictList) => {
-  // filter out tv shows
+  // filter out tv shows and movies without dates and posters
   dictList = dictList.filter(function(e) {
-    return e.media_type && e.media_type == 'movie';
+    return (e.media_type != null && e.media_type == 'movie') && (e.release_date != null || e.release_date != '') && (e.poster_path != null || e.poster_path != '');
   });
+
+  // console.log(dictList);
 
   // filter duplicate movie titles
   const filteredList = dictList.reduce((acc, current) => {
@@ -102,6 +104,7 @@ const filterDictList = (dictList) => {
     }
   }, []);
 
+  console.log(filteredList);
   return filteredList;
 }
 
@@ -112,6 +115,8 @@ const getPersonMovies = async (name, personType, numMovies=5) => {
   // first, get person id
   let searchData = await getRequestMovieDB(`/search/person?api_key=${MOVIEDB_API_KEY}&query=${name}`);
   let personId = searchData['results'][0]['id'];
+  let personName = searchData['results'][0]['name'];
+  // console.log(searchData['results'][0]['known_for']);
 
   // get movies
   let worksData = await getRequestMovieDB(`/person/${personId}/combined_credits?api_key=${MOVIEDB_API_KEY}`);
@@ -148,6 +153,8 @@ const getPersonMovies = async (name, personType, numMovies=5) => {
     timelineList = distributedCopy(sortedListByReleaseDate, 10);
   }
 
+  // console.log(timelineList);
+
   // populate list with most popular movies
   for (let i = 0; i < numMovies; i++) {
     let currMovieData = sortedListByPopularity[i];
@@ -177,14 +184,14 @@ const getPersonMovies = async (name, personType, numMovies=5) => {
     currData['date'] = currSelection['release_date'];
     currData['timeline'] = true;
 
-    console.log(currData);
+    // console.log(currData);
     result.push(currData);
   }
 
+  result.push(personName);
+
   return result;
 }
-
-
 
 module.exports = {
   getRecommendedMovies,

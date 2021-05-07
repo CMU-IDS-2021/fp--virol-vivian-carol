@@ -44,54 +44,60 @@ $(document).ready(() => {
 
       try {
         setTimeout(() => {
-          let dominantColor = colorThief.getColor(image);
-          let paletteColors = colorThief.getPalette(image, swatches);
-          console.log(paletteColors);
-          console.log(dominantColor);
+          if (image.src == 'https://image.tmdb.org/t/p/original/null') {
+            let error = document.createElement('p');
+            error.innerText = 'could not create color palette.';
+            error.classList.add('error');
+            palette.append(error);
+          } else {
+            let dominantColor = colorThief.getColor(image);
+            let paletteColors = colorThief.getPalette(image, swatches);
+            console.log(paletteColors);
+            console.log(dominantColor);
 
-          // add colors to palette
-          while (palette.firstChild) palette.removeChild(palette.firstChild);
-          paletteColors.reduce( (palette,rgb) => {
-            let color = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;        
-            let swatch = document.createElement('div');
-            swatch.style.setProperty('--color', color);
-            swatch.setAttribute('color', color);
-            palette.append(swatch);
-            return palette;
-          }, palette);
+            // add colors to palette
+            while (palette.firstChild) palette.removeChild(palette.firstChild);
+            paletteColors.reduce( (palette,rgb) => {
+              let color = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;        
+              let swatch = document.createElement('div');
+              swatch.style.setProperty('--color', color);
+              swatch.setAttribute('color', color);
+              palette.append(swatch);
+              return palette;
+            }, palette);
 
-          // add swatch to color timeline plot
-          if (i > 5) {
-            // add dominant color to color plot
-            let dColor = `rgb(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`;
-            let dContainer = document.createElement('div');
-            let dSwatch = document.createElement('div');
-            let dYear = document.createElement('p');
+            // add swatch to color timeline plot
+            if (i > 5) {
+              // add dominant color to color plot
+              let dColor = `rgb(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`;
+              let dContainer = document.createElement('div');
+              let dSwatch = document.createElement('div');
+              let dYear = document.createElement('p');
 
-            dSwatch.style.setProperty('--color', dColor);
-            dSwatch.setAttribute('color', dColor);
-            dSwatch.classList.add('plot-swatch');
+              dSwatch.style.setProperty('--color', dColor);
+              dSwatch.setAttribute('color', dColor);
+              dSwatch.classList.add('plot-swatch');
 
-            dContainer.classList.add('plot-swatch-container');
+              dContainer.classList.add('plot-swatch-container');
 
-            let year = $(`#movie-${i}-date`).text().substring(0,4);
-            dYear.innerText = year;
+              let year = $(`#movie-${i}-date`).text().substring(0,4);
+              dYear.innerText = year;
 
-            dContainer.append(dSwatch);
-            dContainer.append(dYear);
-            plot.append(dContainer);
+              dContainer.append(dSwatch);
+              dContainer.append(dYear);
+              plot.append(dContainer);
+            }
           }
-
           // hide poster
           $(`#movie-${i}-poster`).css({'display': 'none'});
-        }, 2000);
+        }, 5000);
 
         setTimeout(() => {
           // show results div
           $('#results-div').css({'display': 'block'});
           $('.message-div').css({'display': 'none'});
 
-        }, 2500);
+        }, 5100);
     
       } catch (err) {
         console.log(err);

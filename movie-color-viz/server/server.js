@@ -44,75 +44,76 @@ app.post('/', async function (req, res){
     switch(req.body.viztype) {
       case 'movie':
         data = await middleware.getRecommendedMovies(req.body.textinput, num);
-        text = "similar movies:";
-        console.log('similar movies:', data);
+        text = "recommended movies:";
+        // console.log('similar movies:', data);
         break;
       case 'producer':
         data = await middleware.getPersonMovies(req.body.textinput, 'producer', num);
-        text = "top movies:";
-        console.log('producer data:', data);
+        text = "movies:";
+        // console.log('producer data:', data);
         break;
       case 'actor':
         data = await middleware.getPersonMovies(req.body.textinput, 'actor', num);
-        text = "top movies:";
-        console.log('actor data:', data);
+        text = "movies:";
+        // console.log('actor data:', data);
         break;
     }
+
+    let movieOne = data[0];
+    let movieTwo = data[1];
+    let movieThree = data[2];
+    let movieFour = data[3];
+    let movieFive = data[4];
+
+    if (req.body.viztype == 'movie') {
+      let originalMovie = data[5];
+      res.render('home', {
+        originalMovie: originalMovie,
+        text: text,
+        type: req.body.viztype,
+        input: req.body.textinput,
+        movie1: movieOne,
+        movie2: movieTwo,
+        movie3: movieThree,
+        movie4: movieFour,
+        movie5: movieFive,
+      });
+    } else {
+      let movie6 = data[6];
+      let movie7 = data[7];
+      let movie8 = data[8];
+      let movie9 = data[9];
+      let movie10 = data[10];
+      let movie11 = data[11];
+      let movie12 = data[12];
+      let movie13 = data[13];
+      let movie14 = data[14];
+      let movie15 = data[15];
+    
+      res.render('home', {
+        text: text,
+        type: req.body.viztype,
+        input: data.slice(-1),
+        movie1: movieOne,
+        movie2: movieTwo,
+        movie3: movieThree,
+        movie4: movieFour,
+        movie5: movieFive,
+        movie6: movie6,
+        movie7: movie7,
+        movie8: movie8,
+        movie9: movie9,
+        movie10: movie10,
+        movie11: movie11,
+        movie12: movie12,
+        movie13: movie13,
+        movie14: movie14,
+        movie15: movie15,
+      });
+    }
+
   } catch (e) {
     res.status(404).send();
-  }
-
-  let movieOne = data[0];
-  let movieTwo = data[1];
-  let movieThree = data[2];
-  let movieFour = data[3];
-  let movieFive = data[4];
-
-  if (req.body.viztype == 'movie') {
-    let originalMovie = data[5];
-    res.render('home', {
-      originalMovie: originalMovie,
-      text: text,
-      type: req.body.viztype,
-      input: req.body.textinput,
-      movie1: movieOne,
-      movie2: movieTwo,
-      movie3: movieThree,
-      movie4: movieFour,
-      movie5: movieFive,
-    });
-  } else {
-    let movie6 = data[6];
-    let movie7 = data[7];
-    let movie8 = data[8];
-    let movie9 = data[9];
-    let movie10 = data[10];
-    let movie11 = data[11];
-    let movie12 = data[12];
-    let movie13 = data[13];
-    let movie14 = data[14];
-    let movie15 = data[15];
-  
-    res.render('home', {
-      text: text,
-      type: req.body.viztype,
-      input: req.body.textinput,
-      movie1: movieOne,
-      movie2: movieTwo,
-      movie3: movieThree,
-      movie4: movieFour,
-      movie5: movieFive,
-      movie6: movie6,
-      movie7: movie7,
-      movie8: movie8,
-      movie9: movie9,
-      movie10: movie10,
-      movie11: movie11,
-      movie12: movie12,
-      movie13: movie13,
-      movie14: movie14,
-      movie15: movie15,
-    });
   }
 
 });
