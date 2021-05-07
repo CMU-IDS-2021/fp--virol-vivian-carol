@@ -59,22 +59,17 @@ Our decision to utilize color palettes and dominant color changes over time prov
 
 Three directions came up after our validation with the audiences: 
 
-1. **More insight from the average of the revenue, budget, and box office by comparing with different directors/actors**
-
+**More insight from the average of the revenue, budget, and box office by comparing with different directors/actors**
 
 The average revenue, budget, and box office from individual directors/actors does not provide much insight without other comparisons. A future implementation can allow users to compare the data from individual directors/actors with the overall average of directors and actors in their fields. For example, the top 10 directors with the highest box office show the difference between the directors' average budget with the average budget of all movies in a decade. 
  
 We didn't go in this direction initially because the comparison might not be valid. For instance, there's no insight to compare the budget or revenue between action film directors and documentary directors because the goals of these films are different. The comparison needs to be designed deliberately. Otherwise, it might create biases that subvert our intended use cases. For example, encouraging people to focus on the box office and revenue may incur a myopic viewpoint on films as a venue for profit while ignoring the artistic value and social impact they bring. This is the reason why we decided to focus only on comparing this data only within the directors'/actors' work.
 
-2. **Labeling the style of the directors/actors by their work**
-
-
+**Labeling the style of the directors/actors by their work**
 
 The word "style" was mentioned multiple times when people talked about what they liked about the director/actor. Multiple aspects shape this style, such as intended genre, cinematography, color themes, and narratives. Given the limited data we had access to, our platform focused primarily on genres and color themes relating to style for the audience to explore. Still, the concept of "style" is fascinating and can be further extended to analyze and understand the work of directors/actors. For example, if script data is accessible, there might be ways to label the script with style, if there are existing data about the characteristics of the roles in the movie, we can better understand their strength and experience in acting better. 
 
-3. **Accurate color palettes + future color visualizations**
+**Accurate color palettes + future color visualizations**
 
-
-
-   Our initial idea for visualizing movie colors by grabbing frames of the movie trailers was unfortunately closer to the most ideal color visualization than our current implementation. Due to the short time we had to complete our project, we had to sacrifice accuracy for functionality. Future improvements include figuring out how to use this more accurate visualization in a web application, more engaging and more artistic visualizations, and expanded use cases for our color palettes, such as in designing promotional materials for future movies and psychological analyses of how the color of films affects the audience’s emotional and neurological responses. We have - at the very least - utilized a unique approach to visualizing similarities between recommended movies that has not yet been seen elsewhere and if further research proves this useful, this can be used by streaming services and other content platforms.
+Our initial idea for visualizing movie colors by grabbing frames of the movie trailers was unfortunately closer to the most ideal color visualization than our current implementation. Due to the short time we had to complete our project, we had to sacrifice accuracy for functionality. Future improvements include figuring out how to use this more accurate visualization in a web application, more engaging and more artistic visualizations, and expanded use cases for our color palettes, such as in designing promotional materials for future movies and psychological analyses of how the color of films affects the audience’s emotional and neurological responses. We have - at the very least - utilized a unique approach to visualizing similarities between recommended movies that has not yet been seen elsewhere and if further research proves this useful, this can be used by streaming services and other content platforms.
 
