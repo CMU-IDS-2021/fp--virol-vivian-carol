@@ -2,11 +2,18 @@
 
 ![image](https://user-images.githubusercontent.com/24282522/117394223-6154d900-aebb-11eb-8241-cc42b014bd29.png)
 
-* **Online URL**: TODO
+* **Online URL**: https://share.streamlit.io/cmu-ids-2021/fp--virol-vivian-carol/main/app_carol.py
 * **Team members**:
   * Contact person: vmyoung@andrew.cmu.edu
   * tingyunh@andrew.cmu.edu
 * **Track**: Interactive Visualization/Application
+
+Final Report:
+1. [MD](https://github.com/CMU-IDS-2021/fp--virol-vivian-carol/blob/main/Report.md)
+2. [PDF](https://github.com/CMU-IDS-2021/fp--virol-vivian-carol/blob/main/IDS_Final_Report_Vivian_Carol.pdf)
+
+## Abstract
+Existing ways to access movie data exist in varying and fragmented locations on the internet. Lack of readability and visualization for these movie data resources prevent users from gaining insight into their favorite movies, producers, and actors. We have created a comprehensive one-stop-shop movie data application with the intention of visualizing and compiling data in a user-friendly and unique way in order to provide movie lovers with a novel perspective on data in the film industry.
 
 ## Work distribution
 
