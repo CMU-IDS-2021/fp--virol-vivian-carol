@@ -43,7 +43,7 @@ This platform is consists of five parts, the biography, three charts, and the mo
 
 **The movie colors visualization application** is intended to display similarities between the chosen movie and its recommended movies, show color palettes of movies within an individual’s body of work, and visualize the changing of color themes over time. Movie search queries result in color palettes of both that movie and its recommended movies. Producer and actor search queries result in color palettes of their respective selected movies and dominant colors in their movies over time.
 
-<img src="/Users/carol/Downloads/unknown.png" alt="unknown" style="zoom:10%;" />
+<img src="https://user-images.githubusercontent.com/7588145/117395547-24421400-aec6-11eb-98ef-70c49086d15c.png" alt="unknown" style="zoom:10%;" />
 
 ### Discussion
 
